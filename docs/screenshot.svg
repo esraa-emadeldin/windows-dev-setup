@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="608" viewBox="0 0 640 608">
+  <rect width="640" height="608" rx="10" fill="#1e1e2e"/>
+  <circle cx="22" cy="20" r="6" fill="#f38ba8"/><circle cx="42" cy="20" r="6" fill="#f9e2af"/><circle cx="62" cy="20" r="6" fill="#a6e3a1"/>
+  <text x="320" y="25" fill="#7f849c" font-family="Segoe UI, sans-serif" font-size="13" text-anchor="middle">windows-dev-setup</text>
+  <g font-family="Cascadia Mono, Consolas, Menlo, monospace" font-size="14" xml:space="preserve" style="white-space:pre">
+    <text x="20" y="52"><tspan fill="#a6e3a1">PS&gt;&#160;</tspan><tspan fill="#ffffff">.\setup.ps1&#160;-Category&#160;core,terminal,web&#160;-Plan</tspan></text>
+    <text x="20" y="72"><tspan fill="#7f849c">Reading&#160;installed&#160;apps&#160;from&#160;winget&#160;and&#160;Scoop...</tspan></text>
+    <text x="20" y="92"><tspan fill="#89dceb">Checking&#160;22&#160;apps&#160;in:&#160;core,&#160;terminal,&#160;web...</tspan></text>
+    <text x="20" y="112"><tspan fill="#7f849c">&#160;&#160;ok&#160;&#160;&#160;Git</tspan></text>
+    <text x="20" y="132"><tspan fill="#7f849c">&#160;&#160;ok&#160;&#160;&#160;GitHub&#160;CLI</tspan></text>
+    <text x="20" y="152"><tspan fill="#7f849c">&#160;&#160;ok&#160;&#160;&#160;PowerShell&#160;7</tspan></text>
+    <text x="20" y="172"><tspan fill="#7f849c">&#160;&#160;ok&#160;&#160;&#160;Windows&#160;Terminal</tspan></text>
+    <text x="20" y="192"><tspan fill="#7f849c">&#160;&#160;ok&#160;&#160;&#160;7-Zip</tspan></text>
+    <text x="20" y="212"><tspan fill="#7f849c">&#160;&#160;ok&#160;&#160;&#160;Everything</tspan></text>
+    <text x="20" y="232"><tspan fill="#7f849c">&#160;&#160;ok&#160;&#160;&#160;PowerToys</tspan></text>
+    <text x="20" y="252"><tspan fill="#7f849c">&#160;&#160;ok&#160;&#160;&#160;WezTerm</tspan></text>
+    <text x="20" y="272"><tspan fill="#7f849c">&#160;&#160;ok&#160;&#160;&#160;Oh&#160;My&#160;Posh</tspan></text>
+    <text x="20" y="292"><tspan fill="#7f849c">&#160;&#160;ok&#160;&#160;&#160;fzf</tspan></text>
+    <text x="20" y="312"><tspan fill="#7f849c">&#160;&#160;ok&#160;&#160;&#160;zoxide</tspan></text>
+    <text x="20" y="332"><tspan fill="#f9e2af">&#160;&#160;+&#160;&#160;&#160;&#160;ripgrep&#160;(scoop:&#160;main/ripgrep)</tspan></text>
+    <text x="20" y="352"><tspan fill="#f9e2af">&#160;&#160;+&#160;&#160;&#160;&#160;fd&#160;(scoop:&#160;main/fd)</tspan></text>
+    <text x="20" y="372"><tspan fill="#f9e2af">&#160;&#160;+&#160;&#160;&#160;&#160;bat&#160;(scoop:&#160;main/bat)</tspan></text>
+    <text x="20" y="392"><tspan fill="#f9e2af">&#160;&#160;+&#160;&#160;&#160;&#160;delta&#160;(scoop:&#160;main/delta)</tspan></text>
+    <text x="20" y="412"><tspan fill="#f9e2af">&#160;&#160;+&#160;&#160;&#160;&#160;lazygit&#160;(scoop:&#160;extras/lazygit)</tspan></text>
+    <text x="20" y="432"><tspan fill="#f9e2af">&#160;&#160;+&#160;&#160;&#160;&#160;jq&#160;(scoop:&#160;main/jq)</tspan></text>
+    <text x="20" y="452"><tspan fill="#f9e2af">&#160;&#160;+&#160;&#160;&#160;&#160;gsudo&#160;(scoop:&#160;main/gsudo)</tspan></text>
+    <text x="20" y="472"><tspan fill="#7f849c">&#160;&#160;ok&#160;&#160;&#160;chezmoi</tspan></text>
+    <text x="20" y="492"><tspan fill="#7f849c">&#160;&#160;ok&#160;&#160;&#160;Node.js&#160;LTS</tspan></text>
+    <text x="20" y="512"><tspan fill="#f9e2af">&#160;&#160;+&#160;&#160;&#160;&#160;fnm&#160;(winget:&#160;Schniz.fnm)</tspan></text>
+    <text x="20" y="532"><tspan fill="#7f849c">&#160;&#160;ok&#160;&#160;&#160;Bruno</tspan></text>
+    <text x="20" y="572"><tspan fill="#89dceb">Plan&#160;only&#160;-&#160;nothing&#160;was&#160;changed.&#160;Run&#160;again&#160;without&#160;-Plan&#160;to&#160;apply.</tspan></text>
+  </g>
+</svg>

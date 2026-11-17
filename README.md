@@ -1,11 +1,20 @@
 # windows-dev-setup
 
+[![CI](https://github.com/esraa-emadeldin/windows-dev-setup/actions/workflows/ci.yml/badge.svg)](https://github.com/esraa-emadeldin/windows-dev-setup/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![Platform: Windows 10 | 11](https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-0078D6?logo=windows)
+![PowerShell 5.1 | 7+](https://img.shields.io/badge/PowerShell-5.1%20%7C%207%2B-5391FE?logo=powershell&logoColor=white)
+![Package managers: winget + Scoop](https://img.shields.io/badge/uses-winget%20%2B%20Scoop-6E40C9)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
 A curated list of the apps a software developer actually needs on Windows, plus a small
 script that installs them **safely**: it shows a plan first, skips anything you already
 have, and can keep big installs and caches off your `C:` drive.
 
+![setup.ps1 showing a plan: apps already installed are marked ok, missing ones are marked +](docs/screenshot.svg)
+
 ```powershell
-git clone https://github.com/<you>/windows-dev-setup
+git clone https://github.com/esraa-emadeldin/windows-dev-setup
 cd windows-dev-setup
 .\setup.ps1 -List                                  # browse the catalog
 .\setup.ps1 -Category core,terminal,web -Plan      # see what would happen - changes nothing
@@ -17,7 +26,8 @@ built only on what Windows already ships with: **winget**, plus **Scoop** for CL
 
 ## Why use this instead of a long blog-post list?
 
-- **Plan first.** `-Plan` prints exactly what would be installed or changed.
+- **Plan first.** `-Plan` prints exactly what would be installed or changed, in a few seconds
+  (it asks winget and Scoop once for everything installed, not once per app).
 - **No duplicates.** An app is skipped if winget/Scoop already manages it *or* its command
   is already on your PATH (installed by hand, Chocolatey, anything).
 - **Keep C: small.** `-InstallRoot D:\Dev\Tools` puts apps whose installers support it there;
@@ -71,7 +81,7 @@ Use `-Category all` for everything. Everything is free; most of it is open sourc
 ## Requirements
 
 - Windows 10 1809+ or Windows 11 with **winget** ("App Installer" from the Microsoft Store).
-- PowerShell 7 recommended (`winget install Microsoft.PowerShell`); Windows PowerShell 5.1 works for most of it.
+- PowerShell 7 recommended (`winget install Microsoft.PowerShell`). Windows PowerShell 5.1 works too (checked in CI).
 - If scripts are blocked: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
 
 ## Customize
@@ -95,6 +105,23 @@ Install-Module PSScriptAnalyzer -RequiredVersion 1.25.0 -Scope CurrentUser
 Invoke-Pester ./tests
 Invoke-ScriptAnalyzer -Path . -Recurse -Settings ./PSScriptAnalyzerSettings.psd1
 ./tools/Test-CatalogIds.ps1      # checks every id still exists in winget/Scoop (needs both)
+./tools/New-Screenshot.ps1       # re-renders docs/screenshot.svg from a real -Plan run
 ```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Licensed under [MIT](LICENSE).
+## Roadmap
+
+- [ ] `-Export`: turn the apps on *your* PC into a personal catalog.
+- [ ] Profiles such as `student`, `web-dev`, `data` (pre-picked category sets).
+- [ ] Optional interactive picker (checkboxes in the terminal). If this is ever built,
+      it will likely be a small **Go** binary (Bubble Tea) that reads the same `catalog.json`.
+      The PowerShell script stays the default because you can read it before you run it,
+      and it needs no download or code signing.
+
+Ideas welcome: [open an issue](https://github.com/esraa-emadeldin/windows-dev-setup/issues/new/choose).
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) and our [Code of Conduct](CODE_OF_CONDUCT.md).
+Found a security problem? Please follow [SECURITY.md](SECURITY.md) instead of opening a public issue.
+
+Licensed under [MIT](LICENSE).

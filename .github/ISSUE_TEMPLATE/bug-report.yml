@@ -1,0 +1,35 @@
+name: Bug report
+description: Something in setup.ps1 didn't work
+labels: ["bug"]
+body:
+  - type: input
+    id: command
+    attributes:
+      label: Command you ran
+      placeholder: .\setup.ps1 -Category core,web -Plan
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened, and what did you expect?
+      description: Paste the output (remove anything private, like user names in paths).
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version
+      description: Run `winver`
+      placeholder: Windows 11 24H2
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: PowerShell and winget versions
+      description: Run `$PSVersionTable.PSVersion; winget --version`
+      placeholder: 7.6.0 / v1.29
+    validations:
+      required: true

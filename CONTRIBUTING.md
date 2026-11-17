@@ -26,4 +26,7 @@ Invoke-ScriptAnalyzer -Path . -Recurse -Settings ./PSScriptAnalyzerSettings.psd1
 ./tools/Test-CatalogIds.ps1
 ```
 
+Also add a line to `CHANGELOG.md` under "Unreleased". If you change what `setup.ps1` prints,
+re-render the README image with `./tools/New-Screenshot.ps1`.
+
 Keep code simple and commented. This project is meant to be easy to read for people new to PowerShell.

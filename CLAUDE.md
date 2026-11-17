@@ -16,6 +16,8 @@ plan/apply installer (`setup.ps1`). Logic lives in `src/DevSetup.psm1` as pure f
 - Never run `setup.ps1` without `-Plan` unless the user asks: it installs software.
 - Keep functions in `src/` pure (no installs, no env changes) so they stay testable.
 - New app → `catalog.json` + README table; verify the id with `winget show` / `scoop info`.
-- Open-source repo: no personal names, emails or machine paths in files.
+- Open-source repo: no emails or local machine paths in files (the public GitHub repo URL is fine).
+- Note user-visible changes in `CHANGELOG.md` under "Unreleased".
+- After changing setup.ps1 output, re-render the README image: `./tools/New-Screenshot.ps1`.
 - Keep code simple and commented. Add a test when behaviour changes; run tests + lint before saying it's done.
 - Commits: short, simple one-line messages. No Co-Authored-By or any attribution trailer.

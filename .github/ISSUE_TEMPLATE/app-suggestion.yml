@@ -1,0 +1,43 @@
+name: Suggest an app
+description: Propose adding (or replacing) an app in the catalog
+title: "Add app: "
+labels: ["app suggestion"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: App name
+      placeholder: ripgrep
+    validations:
+      required: true
+  - type: input
+    id: id
+    attributes:
+      label: Package id
+      description: From `winget search <name>` or `scoop search <name>` (Scoop ids look like `main/ripgrep`).
+      placeholder: main/ripgrep
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options: [core, terminal, editors, web, python, java, dotnet, cpp, containers, databases, notes, maintenance, ai, "new category (explain below)"]
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why should most Windows developers have it?
+      description: One or two sentences. This becomes the app's "why" line.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: It is free (open source preferred).
+          required: true
+        - label: It is not a duplicate of an app already in that category (or I explain why it's better).
+          required: true

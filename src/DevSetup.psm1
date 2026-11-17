@@ -53,6 +53,8 @@ function Select-DevApp {
         [Parameter(Mandatory)][string[]]$Category
     )
     $known = @($Catalog.categories.PSObject.Properties.Name)
+    # "core,web" arrives as ONE string when called via `powershell -File`, so split it ourselves
+    $Category = @($Category -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ })
     if ($Category -contains 'all') { $Category = $known }
 
     $unknown = $Category | Where-Object { $_ -notin $known }
@@ -84,6 +86,48 @@ function Get-DevInstallPlan {
             Location = $location
         }
     }
+}
+
+function ConvertFrom-DevInstalledExport {
+    <#
+      Turns the JSON from `winget export` and `scoop export` into fast lookup sets:
+        .Winget = ids winget knows are installed (all sources, incl. msstore)
+        .Scoop  = app names Scoop has installed
+      Asking each package manager ONCE is much faster than once per app.
+    #>
+    param(
+        [AllowEmptyString()][string]$WingetJson,
+        [AllowEmptyString()][string]$ScoopJson
+    )
+    # Ids are case-insensitive (git.git == Git.Git)
+    $winget = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::OrdinalIgnoreCase)
+    $scoop  = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::OrdinalIgnoreCase)
+
+    if ($WingetJson) {
+        foreach ($source in (ConvertFrom-Json $WingetJson).Sources) {
+            foreach ($pkg in $source.Packages) { [void]$winget.Add($pkg.PackageIdentifier) }
+        }
+    }
+    if ($ScoopJson) {
+        foreach ($app in (ConvertFrom-Json $ScoopJson).apps) { [void]$scoop.Add($app.Name) }
+    }
+    return [pscustomobject]@{ Winget = $winget; Scoop = $scoop }
+}
+
+function Test-DevAppInstalled {
+    <#
+      Is this app already installed? True if the package manager has it, OR if its
+      'command' already works (installed by hand, Chocolatey, ...), so we never add a second copy.
+      -CommandExists is a scriptblock so tests can fake it.
+    #>
+    param(
+        [Parameter(Mandatory)]$App,
+        [Parameter(Mandatory)]$Installed,
+        [scriptblock]$CommandExists = { param($name) [bool](Get-Command $name -ErrorAction SilentlyContinue) }
+    )
+    if ($App.command -and (& $CommandExists $App.command)) { return $true }
+    if ($App.manager -eq 'scoop') { return $Installed.Scoop.Contains(($App.id -split '/')[-1]) }
+    return $Installed.Winget.Contains($App.id)
 }
 
 function Get-DevInstallCommand {
@@ -120,4 +164,4 @@ function Get-DevCacheSetting {
     }
 }
 
-Export-ModuleMember -Function Get-DevCatalog, Test-DevCatalog, Select-DevApp, Get-DevInstallPlan, Get-DevInstallCommand, Get-DevCacheSetting
+Export-ModuleMember -Function Get-DevCatalog, Test-DevCatalog, Select-DevApp, Get-DevInstallPlan, Get-DevInstallCommand, Get-DevCacheSetting, ConvertFrom-DevInstalledExport, Test-DevAppInstalled

@@ -39,3 +39,10 @@ jobs:
           $config.Run.Exit = $true
           $config.Output.Verbosity = 'Detailed'
           Invoke-Pester -Configuration $config
+
+      # Many people still start scripts from Windows PowerShell 5.1 - make sure it runs there too
+      - name: Smoke test on Windows PowerShell 5.1
+        shell: powershell
+        run: |
+          .\setup.ps1 -List
+          if (-not $?) { throw 'setup.ps1 -List failed on Windows PowerShell 5.1' }

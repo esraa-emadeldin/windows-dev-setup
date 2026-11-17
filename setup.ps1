@@ -21,10 +21,12 @@ param(
     # Optional: move npm/pip/uv/NuGet/Gradle caches under this folder, e.g. D:\Dev\.cache
     [string]$CacheRoot,
     # Use a different catalog file (handy for your own fork)
-    [string]$CatalogPath = (Join-Path $PSScriptRoot 'catalog.json')
+    [string]$CatalogPath
 )
 
 $ErrorActionPreference = 'Stop'
+# Set here, not as a param default: Windows PowerShell 5.1 has no $PSScriptRoot yet inside param()
+if (-not $CatalogPath) { $CatalogPath = Join-Path $PSScriptRoot 'catalog.json' }
 Import-Module (Join-Path $PSScriptRoot 'src\DevSetup.psm1') -Force
 
 $catalog  = Get-DevCatalog -Path $CatalogPath
@@ -44,27 +46,29 @@ if ($List) {
     return
 }
 
+# Pick the apps first, so a typo in -Category fails right away
+$apps = Select-DevApp -Catalog $catalog -Category $Category
+
 # --- Check the package managers we need -------------------------------------
 $hasWinget = [bool](Get-Command winget -ErrorAction SilentlyContinue)
 $hasScoop  = [bool](Get-Command scoop -ErrorAction SilentlyContinue)
 if (-not $hasWinget) { throw 'winget is missing. Install "App Installer" from the Microsoft Store, then run this again.' }
 
-# Real "is it installed?" check, handed to the plan as a scriptblock
-$isInstalled = {
-    param($app)
-    # Already on PATH (installed any way, even by hand)? Then don't install a second copy.
-    if ($app.command -and (Get-Command $app.command -ErrorAction SilentlyContinue)) { return $true }
-    if ($app.manager -eq 'scoop') {
-        if (-not $hasScoop) { return $false }
-        scoop prefix ($app.id -split '/')[-1] *> $null   # succeeds only if installed
-    } else {
-        winget list --id $app.id --exact --accept-source-agreements *> $null
-    }
-    return ($LASTEXITCODE -eq 0)
+# Ask each package manager ONCE what is installed (much faster than once per app)
+Write-Host 'Reading installed apps from winget and Scoop...' -ForegroundColor DarkGray
+$exportFile = Join-Path ([IO.Path]::GetTempPath()) "windows-dev-setup-$PID.json"
+try {
+    winget export --output $exportFile --accept-source-agreements *> $null
+    $wingetJson = if (Test-Path $exportFile) { Get-Content $exportFile -Raw } else { '' }
+} finally {
+    Remove-Item $exportFile -ErrorAction SilentlyContinue
 }
+$scoopJson = if ($hasScoop) { (scoop export) -join "`n" } else { '' }
+$installed = ConvertFrom-DevInstalledExport -WingetJson $wingetJson -ScoopJson $scoopJson
 
-$apps = Select-DevApp -Catalog $catalog -Category $Category
-Write-Host "Checking $($apps.Count) apps in: $($Category -join ', ')..." -ForegroundColor Cyan
+$isInstalled = { param($app) Test-DevAppInstalled -App $app -Installed $installed }
+
+Write-Host "Checking $($apps.Count) apps in: $(($apps.category | Select-Object -Unique) -join ', ')..." -ForegroundColor Cyan
 $planItems = @(Get-DevInstallPlan -App $apps -IsInstalled $isInstalled -InstallRoot $InstallRoot)
 
 # --- Show the plan -------------------------------------------------------------

@@ -78,6 +78,10 @@ Describe 'Select-DevApp' {
         $apps.name | Should -Be @('Node.js', 'Store App')
     }
 
+    It "accepts 'core,web' as one string (how powershell -File passes it)" {
+        (Select-DevApp -Catalog $mini -Category 'core, web').Count | Should -Be 4
+    }
+
     It "treats 'all' as every category" {
         (Select-DevApp -Catalog $mini -Category 'all').Count | Should -Be 4
     }
@@ -134,6 +138,48 @@ Describe 'Get-DevInstallCommand' {
         $cmd = Get-DevInstallCommand -PlanItem $item
         $cmd.Exe | Should -Be 'scoop'
         $cmd.Args | Should -Be @('install', 'main/fzf')
+    }
+}
+
+Describe 'ConvertFrom-DevInstalledExport' {
+    BeforeAll {
+        # Same shape as real `winget export` / `scoop export` output
+        $script:wingetJson = '{"Sources":[{"Packages":[{"PackageIdentifier":"Git.Git"}],"SourceDetails":{"Name":"winget"}},
+                                           {"Packages":[{"PackageIdentifier":"9ABC"}],"SourceDetails":{"Name":"msstore"}}]}'
+        $script:scoopJson  = '{"buckets":[{"Name":"main"}],"apps":[{"Name":"fzf","Source":"main"}]}'
+    }
+
+    It 'collects ids from every winget source, case-insensitively' {
+        $set = ConvertFrom-DevInstalledExport -WingetJson $wingetJson -ScoopJson ''
+        $set.Winget.Contains('git.git') | Should -BeTrue
+        $set.Winget.Contains('9ABC')    | Should -BeTrue
+        $set.Scoop.Count                | Should -Be 0
+    }
+
+    It 'collects Scoop app names' {
+        $set = ConvertFrom-DevInstalledExport -WingetJson '' -ScoopJson $scoopJson
+        $set.Scoop.Contains('fzf') | Should -BeTrue
+    }
+}
+
+Describe 'Test-DevAppInstalled' {
+    BeforeAll {
+        $script:installed = ConvertFrom-DevInstalledExport `
+            -WingetJson '{"Sources":[{"Packages":[{"PackageIdentifier":"Git.Git"}]}]}' `
+            -ScoopJson  '{"apps":[{"Name":"fzf"}]}'
+        $script:noCommands = { $false }
+    }
+
+    It 'finds winget apps by id and scoop apps by name (bucket ignored)' {
+        Test-DevAppInstalled -App $mini.apps[0] -Installed $installed -CommandExists $noCommands | Should -BeTrue   # Git.Git
+        Test-DevAppInstalled -App $mini.apps[1] -Installed $installed -CommandExists $noCommands | Should -BeTrue   # main/fzf
+        Test-DevAppInstalled -App $mini.apps[2] -Installed $installed -CommandExists $noCommands | Should -BeFalse  # Node.js
+    }
+
+    It "treats an app as installed when its command already exists (no duplicate copies)" {
+        $app = [pscustomobject]@{ manager = 'scoop'; id = 'main/ripgrep'; command = 'rg' }
+        Test-DevAppInstalled -App $app -Installed $installed -CommandExists { param($n) $n -eq 'rg' } | Should -BeTrue
+        Test-DevAppInstalled -App $app -Installed $installed -CommandExists $noCommands | Should -BeFalse
     }
 }
 

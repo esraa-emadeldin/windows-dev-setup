@@ -1,0 +1,77 @@
+{
+  "categories": {
+    "core":        "Must-haves for any developer on Windows",
+    "terminal":    "A modern, fast command line",
+    "editors":     "Code editors and IDEs",
+    "web":         "JavaScript / Node.js and API testing",
+    "python":      "Python with fast, isolated environments",
+    "java":        "JDK and build tools",
+    "dotnet":      ".NET SDK",
+    "cpp":         "C / C++ compilers and build tools",
+    "containers":  "Containers and Linux on Windows",
+    "databases":   "Database server and GUI client",
+    "notes":       "Notes, docs and learning",
+    "maintenance": "Keep the PC clean (CleanMyMac-style tools)",
+    "ai":          "AI assistants for coding"
+  },
+
+  "apps": [
+    { "category": "core", "manager": "winget", "id": "Git.Git", "command": "git",                    "name": "Git",              "location": true,  "why": "Version control. Everything else assumes you have it." },
+    { "category": "core", "manager": "winget", "id": "GitHub.cli", "command": "gh",                 "name": "GitHub CLI",       "location": false, "why": "Create repos, PRs and issues from the terminal (gh)." },
+    { "category": "core", "manager": "winget", "id": "Microsoft.PowerShell", "command": "pwsh",       "name": "PowerShell 7",     "location": false, "why": "Modern cross-platform shell; much better than Windows PowerShell 5.1." },
+    { "category": "core", "manager": "winget", "id": "Microsoft.WindowsTerminal",  "name": "Windows Terminal", "location": false, "why": "Tabs, profiles and proper fonts for every shell." },
+    { "category": "core", "manager": "winget", "id": "7zip.7zip",                  "name": "7-Zip",            "location": false, "why": "Opens every archive format; Scoop can reuse it." },
+    { "category": "core", "manager": "winget", "id": "voidtools.Everything",       "name": "Everything",       "location": false, "why": "Find any file on disk instantly." },
+    { "category": "core", "manager": "winget", "id": "Microsoft.PowerToys",        "name": "PowerToys",        "location": false, "why": "Run launcher, FancyZones, color picker, text extractor and more." },
+
+    { "category": "terminal", "manager": "scoop", "id": "extras/wezterm", "command": "wezterm",  "name": "WezTerm",     "why": "GPU-accelerated terminal with splits, configured in Lua (closest to Ghostty on Windows)." },
+    { "category": "terminal", "manager": "scoop", "id": "main/oh-my-posh", "command": "oh-my-posh", "name": "Oh My Posh",  "why": "Prompt themes that show git branch, runtime versions and more." },
+    { "category": "terminal", "manager": "scoop", "id": "main/fzf", "command": "fzf",        "name": "fzf",         "why": "Fuzzy finder for files, history and anything else." },
+    { "category": "terminal", "manager": "scoop", "id": "main/zoxide", "command": "zoxide",     "name": "zoxide",      "why": "Smarter cd that remembers your folders (z proj)." },
+    { "category": "terminal", "manager": "scoop", "id": "main/ripgrep", "command": "rg",    "name": "ripgrep",     "why": "Very fast code search (rg)." },
+    { "category": "terminal", "manager": "scoop", "id": "main/fd", "command": "fd",         "name": "fd",          "why": "Simple, fast alternative to find." },
+    { "category": "terminal", "manager": "scoop", "id": "main/bat", "command": "bat",        "name": "bat",         "why": "cat with syntax highlighting and line numbers." },
+    { "category": "terminal", "manager": "scoop", "id": "main/delta", "command": "delta",      "name": "delta",       "why": "Readable, colored git diffs." },
+    { "category": "terminal", "manager": "scoop", "id": "extras/lazygit", "command": "lazygit",  "name": "lazygit",     "why": "Terminal UI for git: stage, commit, rebase with a few keys." },
+    { "category": "terminal", "manager": "scoop", "id": "main/jq", "command": "jq",         "name": "jq",          "why": "Query and reshape JSON on the command line." },
+    { "category": "terminal", "manager": "scoop", "id": "main/gsudo", "command": "gsudo",      "name": "gsudo",       "why": "sudo for Windows: run one command as admin." },
+    { "category": "terminal", "manager": "scoop", "id": "main/chezmoi", "command": "chezmoi",    "name": "chezmoi",     "why": "Keep your dotfiles (profile, configs) in a git repo." },
+
+    { "category": "editors", "manager": "winget", "id": "Microsoft.VisualStudioCode", "command": "code", "name": "VS Code",          "location": true,  "why": "The default editor for most languages." },
+    { "category": "editors", "manager": "winget", "id": "JetBrains.Toolbox",          "name": "JetBrains Toolbox", "location": false, "why": "Installs and updates IntelliJ, PyCharm, Rider... (free for students)." },
+
+    { "category": "web", "manager": "winget", "id": "OpenJS.NodeJS.LTS", "command": "node", "name": "Node.js LTS", "location": false, "why": "JavaScript runtime and npm." },
+    { "category": "web", "manager": "winget", "id": "Schniz.fnm", "command": "fnm",        "name": "fnm",         "location": false, "why": "Switch Node versions per project (.nvmrc)." },
+    { "category": "web", "manager": "winget", "id": "Bruno.Bruno",       "name": "Bruno",       "location": false, "why": "Open-source API client; collections are plain files you can commit." },
+
+    { "category": "python", "manager": "winget", "id": "Python.Python.3.13", "command": "python", "name": "Python 3.13", "location": false, "why": "The Python interpreter." },
+    { "category": "python", "manager": "scoop",  "id": "main/uv", "command": "uv",            "name": "uv",          "why": "Very fast venvs and package installs (uv venv, uv pip install)." },
+
+    { "category": "java", "manager": "winget", "id": "EclipseAdoptium.Temurin.21.JDK", "command": "java", "name": "Temurin JDK 21", "location": false, "why": "Free, open-source Java 21 LTS." },
+    { "category": "java", "manager": "scoop",  "id": "main/maven", "command": "mvn",                     "name": "Maven",          "why": "Java build tool." },
+    { "category": "java", "manager": "scoop",  "id": "main/gradle", "command": "gradle",                    "name": "Gradle",         "why": "Java/Kotlin build tool." },
+
+    { "category": "dotnet", "manager": "winget", "id": "Microsoft.DotNet.SDK.10", "name": ".NET 10 SDK", "location": false, "why": "Build C# / .NET apps." },
+
+    { "category": "cpp", "manager": "winget", "id": "Microsoft.VisualStudio.2022.BuildTools", "name": "VS Build Tools", "location": false, "why": "MSVC compiler; also needed by many Node/Python native packages. Pick the C++ workload in the installer." },
+    { "category": "cpp", "manager": "winget", "id": "Kitware.CMake", "command": "cmake",                          "name": "CMake",          "location": false, "why": "The standard C/C++ build system generator." },
+
+    { "category": "containers", "manager": "winget", "id": "Microsoft.WSL",         "name": "WSL",            "location": false, "why": "Real Linux inside Windows." },
+    { "category": "containers", "manager": "winget", "id": "RedHat.Podman",         "name": "Podman",         "location": false, "why": "Free, daemonless Docker alternative (docker-compatible CLI)." },
+    { "category": "containers", "manager": "winget", "id": "RedHat.Podman-Desktop", "name": "Podman Desktop", "location": false, "why": "GUI for containers, images and pods." },
+
+    { "category": "databases", "manager": "winget", "id": "PostgreSQL.PostgreSQL.18",  "name": "PostgreSQL 18",    "location": false, "why": "The go-to open-source SQL database." },
+    { "category": "databases", "manager": "winget", "id": "DBeaver.DBeaver.Community", "name": "DBeaver",          "location": false, "why": "Free GUI for PostgreSQL, MySQL, SQLite and more." },
+
+    { "category": "notes", "manager": "winget", "id": "Obsidian.Obsidian",     "name": "Obsidian", "location": true,  "why": "Markdown notes that stay as plain files on your disk." },
+    { "category": "notes", "manager": "winget", "id": "Anki.Anki",             "name": "Anki",     "location": true,  "why": "Spaced-repetition flashcards for learning anything." },
+    { "category": "notes", "manager": "winget", "id": "JohnMacFarlane.Pandoc", "command": "pandoc", "name": "Pandoc",   "location": false, "why": "Convert Markdown to Word, PDF, HTML and back." },
+
+    { "category": "maintenance", "manager": "winget",  "id": "AntibodySoftware.WizTree",    "name": "WizTree",              "location": true,  "why": "See what fills your disk in seconds." },
+    { "category": "maintenance", "manager": "winget",  "id": "Klocman.BulkCrapUninstaller", "name": "Bulk Crap Uninstaller", "location": true,  "why": "Uninstall apps (even many at once) and remove their leftovers." },
+    { "category": "maintenance", "manager": "msstore", "id": "9PM860492SZD",                "name": "Microsoft PC Manager",  "why": "Official one-click cleanup and health check." },
+
+    { "category": "ai", "manager": "winget", "id": "Anthropic.ClaudeCode", "command": "claude", "name": "Claude Code", "location": false, "why": "AI coding agent in your terminal." },
+    { "category": "ai", "manager": "winget", "id": "Anthropic.Claude",     "name": "Claude",      "location": false, "why": "Claude desktop app." }
+  ]
+}

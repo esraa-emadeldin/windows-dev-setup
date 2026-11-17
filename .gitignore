@@ -1,0 +1,11 @@
+# Test output
+testResults.xml
+coverage.xml
+
+# Secrets / local settings
+.env
+.env.*
+.claude/settings.local.json
+
+# Global gitignore hides .vscode/settings.json; share this project's settings
+!.vscode/settings.json

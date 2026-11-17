@@ -1,0 +1,6 @@
+# LF line endings everywhere (CI runs on Linux; avoids CRLF warnings and noisy diffs)
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.pdf binary
+*.ipynb text eol=lf
